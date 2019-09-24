@@ -1,6 +1,6 @@
 'use strict'
 
-const { BN, nBN, validateBN } = require('../src/bn')
+const { BN, nBN, validateBN } = require('../')
 
 const BigNumber = BN()
 console.log(BigNumber.config()) // Print current BigNumber configuration

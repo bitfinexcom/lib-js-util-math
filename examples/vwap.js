@@ -1,6 +1,6 @@
 'use strict'
 
-const { VWAP, EWVWAP } = require('../src/vwap')
+const { VWAP, EWVWAP } = require('../')
 
 const values = [
   { price: '10161', volume: '1', weightType: 'bfx' },

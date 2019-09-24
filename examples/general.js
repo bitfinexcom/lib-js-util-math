@@ -1,22 +1,7 @@
-# lib-js-util-math
+'use strict'
 
-The lib includes the utilities depicted below:
-- `BN` - BigNumber utilities
-- `VWAP` - Volume Weighted Average Price (VWAP) index utilities
-- `Standard Deviation` - Standard deviation utilities
+const { stdDeviation, nBN, VWAP } = require('..')
 
-## Installing
-```console
-npm install --save https://github.com/bitfinexcom/lib-js-util-math.git
-```
-
-## Testing
-```console
-npm run test
-```
-
-## Usage
-```javascript
 const data = [
   { price: nBN(10500), y: 'jan', volume: '1' },
   { price: nBN(10700), y: 'feb', volume: '0.33' },
@@ -31,10 +16,3 @@ console.log(vwap) // 10429.24613987284287011807
 
 const dev = stdDeviation(data, a => a.price)
 console.log(dev.toFixed()) // 2980.16591633568094682823
-
-```
-
-## Authors
-- prdn
-- robertkowalski
-- vigan-abd
