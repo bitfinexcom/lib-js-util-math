@@ -1,0 +1,43 @@
+{
+  "name": "lib-js-util-math",
+  "version": "0.0.1",
+  "description": "Bitfinex JS Math Lib",
+  "private": true,
+  "author": {
+    "name": "prdn",
+    "email": "paolo@bitfinex.com"
+  },
+  "keywords": [
+    "bitfinex",
+    "math",
+    "util"
+  ],
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfinexcom/lib-js-util-math.git"
+  },
+  "engine": {
+    "node": ">=8.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "format": "./node_modules/.bin/standard --fix",
+    "test": "npm run lint && npm run unit",
+    "unit": "NODE_ENV=test ./node_modules/.bin/mocha ./test/index.test.js",
+    "lint": "./node_modules/.bin/standard"
+  },
+  "dependencies": {
+    "bignumber.js": "^9.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "standard": "^14.3.1"
+  },
+  "standard": {
+    "ignore": [
+      "/test/**/*.js"
+    ]
+  }
+}
