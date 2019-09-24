@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "husky": "^3.0.5",
     "mocha": "^5.2.0",
     "standard": "^14.3.1"
   },
@@ -39,5 +40,11 @@
     "ignore": [
       "/test/**/*.js"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm run lint",
+      "pre-push": "npm run test"
+    }
   }
 }
