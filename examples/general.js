@@ -11,8 +11,8 @@ const data = [
   { price: nBN(5100), y: 'jun', volume: '1.52' }
 ]
 
-const vwap = VWAP(data)
+const vwap = VWAP(data) // nDC is not supported here
 console.log(vwap) // 10429.24613987284287011807
 
-const dev = stdDeviation(data, a => a.price)
+const dev = stdDeviation(data, a => a.price) // nDC is not supported here
 console.log(dev.toFixed()) // 2980.16591633568094682823

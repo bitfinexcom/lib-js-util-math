@@ -1,6 +1,6 @@
 'use strict'
 
-const { BN, nBN, validateBN } = require('../')
+const { BN, nBN, validateBN, safeDivBN, safeMulBN, safeSubBN, safeSumBN } = require('../')
 
 const BigNumber = BN()
 console.log(BigNumber.config()) // Print current BigNumber configuration
@@ -20,3 +20,8 @@ try {
 } catch (err) {
   console.log(err.message)
 }
+
+console.log(safeSumBN(1, 2, '3', nBN(4), 5).toNumber()) // 15
+console.log(safeSubBN(30.5, 2, '3', nBN(4), -5).toNumber()) // 26.5
+console.log(safeMulBN(3, '4', '2.5').toNumber()) // 30
+console.log(safeDivBN(6, '3', nBN(2)).toNumber()) // 1
