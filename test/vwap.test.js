@@ -37,15 +37,48 @@ module.exports = () => {
     })
 
     it('EWVWAP - it should fail with non numeric values', () => {
+      const now = Date.now()
       const values = [
-        { price: '10161', weightType: 'bfx' },
-        { price: 'a10261.235', weightType: 'bitstamp' },
-        { price: '10261.826', weightType: 'kraken' }
+        { price: '10161', weightType: 'bfx', ts: now },
+        { price: '10161', weightType: 'bfx', ts: now - 1 },
+        { price: 'a10261.235', weightType: 'bitstamp', ts: now - 2 },
+        { price: '10561.826', weightType: 'kraken', ts: now - 1 },
+        { price: '10261.826', weightType: 'kraken', ts: now }
       ]
 
       return expect(
         EWVWAP.bind(null, values, { "bfx": 0.6, "bitstamp": 0.2, "kraken": 0.2 })
       ).to.throw()
+    })
+
+    it('EWVWAP - it should fail with NaN values', () => {
+      const now = Date.now()
+      const values = [
+        { price: '10161', weightType: 'bfx', ts: now },
+        { price: '10161', weightType: 'bfx', ts: now - 1 },
+        { price: NaN, weightType: 'bitstamp', ts: now - 2 },
+        { price: '10561.826', weightType: 'kraken', ts: now - 1 },
+        { price: '10261.826', weightType: 'kraken', ts: now }
+      ]
+
+      return expect(
+        EWVWAP.bind(null, values, { "bfx": 0.6, "bitstamp": 0.2, "kraken": 0.2 })
+      ).to.throw()
+    })
+
+    it('EWVWAP - it should fail with invalid config', () => {
+      const now = Date.now()
+      const values = [
+        { price: '10161', weightType: 'bfx', ts: now },
+        { price: '10161', weightType: 'bfx', ts: now - 1 },
+        { price: '10261.235', weightType: 'bitstamp', ts: now - 2 },
+        { price: '10561.826', weightType: 'kraken', ts: now - 1 },
+        { price: '10261.826', weightType: 'kraken', ts: now }
+      ]
+
+      return expect(
+        EWVWAP.bind(null, values, { "bfx": 0.33, "bitstamp": 0.33, "kraken": 0.33 })
+      ).to.throw("ERR_INVALID_WEIGHT_CONF")
     })
 
     it('EWVWAP - it return 0 with no values', async () => {
@@ -55,18 +88,19 @@ module.exports = () => {
     })
 
     it('EWVWAP - it should match the expected value', async () => {
+      const now = Date.now()
       const values = [
-        { price: '10161', weightType: 'bfx' },
-        { price: '10261.235', weightType: 'bfx' },
-        { price: '10324.2567', weightType: 'bfx' },
-        { price: '10724', weightType: 'bfx' },
-        { price: '10232', weightType: 'bitstamp' },
-        { price: '10510.25847', weightType: 'bitstamp' },
-        { price: '10261.826', weightType: 'kraken' }
+        { price: '10161', weightType: 'bfx', ts: now },
+        { price: '10261.235', weightType: 'bfx', ts: now - 2 },
+        { price: '10324.2567', weightType: 'bfx', ts: now - 1 },
+        { price: '10724', weightType: 'bfx', ts: now - 3 },
+        { price: '10232', weightType: 'bitstamp', ts: now - 2 },
+        { price: '10510.25847', weightType: 'bitstamp', ts: now },
+        { price: '10261.826', weightType: 'kraken', ts: now }
       ]
 
       const res = EWVWAP(values, { "bfx": 0.6, "bitstamp": 0.2, "kraken": 0.2 })
-      return expect(res).to.be.equal('10361.03730466666666666667')
+      return expect(res).to.be.equal('10251.016894')
     })
 
   })
