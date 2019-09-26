@@ -79,8 +79,12 @@ const safeMulBN = (...values) => {
  */
 const safeDivBN = (...values) => {
   if (values.length < 2) throw new Error('ERR_LEN_LESS_THAN_2')
+  validateBN(values[0])
 
-  return values.slice(1).reduce(
+  const dividers = values.slice(1)
+  dividers.forEach(value => validateBN(value, { allowZero: false }))
+
+  return dividers.reduce(
     (acc, curr) => acc.dividedBy(nBN(curr)),
     nBN(values[0])
   )
