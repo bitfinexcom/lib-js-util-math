@@ -10,8 +10,40 @@ module.exports = () => {
       return expect(BN() === BigNumber).to.be.true
     })
 
-    it("nBN - should fail on invalid number", () => {
+    it("nBN - should fail on invalid string as number", () => {
       return expect(nBN.bind(null, 'aa')).to.throw()
+    })
+
+    it("nBN - should fail on invalid string as NaN", () => {
+      return expect(nBN.bind(null, 'NaN')).to.throw()
+    })
+
+    it("nBN - should fail on NaN type", () => {
+      return expect(nBN.bind(null, NaN)).to.throw()
+    })
+
+    it("nBN - should fail on null type", () => {
+      return expect(nBN.bind(null, null)).to.throw()
+    })
+
+    it("nBN - should fail on 'null' value", () => {
+      return expect(nBN.bind(null, 'null')).to.throw()
+    })
+
+    it("nBN - should fail on bool value", () => {
+      return expect(nBN.bind(null, true)).to.throw()
+    })
+
+    it("nBN - should fail on infinite value", () => {
+      return expect(nBN.bind(null, Infinity)).to.throw("ERR_NUM_INFINITE")
+    })
+
+    it("nBN - should fail on -infinite value", () => {
+      return expect(nBN.bind(null, -Infinity)).to.throw("ERR_NUM_INFINITE")
+    })
+
+    it("nBN - should fail on infinity string value", () => {
+      return expect(nBN.bind(null, 'Infinity')).to.throw("ERR_NUM_INFINITE")
     })
 
     it("nBN - should work fail undefined input", () => {
@@ -20,6 +52,86 @@ module.exports = () => {
 
     it("nBN - should return BigNumber instance on valid input", () => {
       return expect(nBN(33) instanceof BigNumber).to.be.true
+    })
+
+    it("nBN - should return BigNumber instance on valid BigNumber input", () => {
+      return expect(nBN(new BigNumber(0)) instanceof BigNumber).to.be.true
+    })
+
+    it("nBN - should return BigNumber instance on 0 input", () => {
+      return expect(nBN(0) instanceof BigNumber).to.be.true
+    })
+
+    it("nBN - should return BigNumber instance on string number input", () => {
+      return expect(nBN('3332') instanceof BigNumber).to.be.true
+    })
+
+    it("nBN - should return BigNumber instance on exponential number input", () => {
+      return expect(nBN(10e-2) instanceof BigNumber).to.be.true
+    })
+
+    it("nBN - should return BigNumber instance on exponential string number input", () => {
+      return expect(nBN('32.33e+2') instanceof BigNumber).to.be.true
+    })
+
+    it("nBN - should return BigNumber instance on decimal input", () => {
+      return expect(nBN(0.333) instanceof BigNumber).to.be.true
+    })
+
+    it("nBN - should return BigNumber instance on negative number input", () => {
+      return expect(nBN(-33) instanceof BigNumber).to.be.true
+    })
+
+    it("nBN - should return BigNumber instance on negative string number input", () => {
+      return expect(nBN('-33.323') instanceof BigNumber).to.be.true
+    })
+
+    it("validateBN - should fail on invalid string as NaN", () => {
+      return expect(
+        validateBN.bind(null, 'NaN')
+      ).to.throw()
+    })
+
+    it("validateBN - should fail on NaN type", () => {
+      return expect(
+        validateBN.bind(null, NaN)
+      ).to.throw()
+    })
+
+    it("validateBN - should fail on null type", () => {
+      return expect(
+        validateBN.bind(null, null)
+      ).to.throw()
+    })
+
+    it("validateBN - should fail on 'null' value", () => {
+      return expect(
+        validateBN.bind(null, 'null')
+      ).to.throw()
+    })
+
+    it("validateBN - should fail on bool value", () => {
+      return expect(
+        validateBN.bind(null, true)
+      ).to.throw()
+    })
+
+    it("validateBN - should fail on infinite value", () => {
+      return expect(
+        validateBN.bind(null, Infinity)
+      ).to.throw("ERR_NUM_INFINITE")
+    })
+
+    it("validateBN - should fail on -infinite value", () => {
+      return expect(
+        validateBN.bind(null, -Infinity)
+      ).to.throw("ERR_NUM_INFINITE")
+    })
+
+    it("validateBN - should fail on infinity string value", () => {
+      return expect(
+        validateBN.bind(null, 'Infinity')
+      ).to.throw("ERR_NUM_INFINITE")
     })
 
     it("validateBN - should throw ERR_NUM_NAN on invalid number", () => {
