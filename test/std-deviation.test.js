@@ -23,6 +23,14 @@ module.exports = () => {
       ).to.throw()
     })
 
+    it('stdDeviation - it should fail with NaN value', () => {
+      const values = [10500, 10700, 11500, '12300', 5000, 5100, NaN, NaN]
+
+      return expect(
+        stdDeviation.bind(null, values)
+      ).to.throw("ERR_NUM_NAN")
+    })
+
     it('stdDeviation - it should return expected value with valid config', () => {
       const values = [10500, 10700, 11500, '12300', 5000, 5100]
 
@@ -37,6 +45,22 @@ module.exports = () => {
       const dev = stdDeviation(values)
       expect(dev instanceof BigNumber).to.be.true
       return expect(dev.toFixed()).to.be.equal('0')
+    })
+
+    it('stdDeviation - it should return expected value with negative values', () => {
+      const values = [-2, -3, -4, -5]
+
+      const dev = stdDeviation(values)
+      expect(dev instanceof BigNumber).to.be.true
+      return expect(dev.toFixed()).to.be.equal('1.1180339887498948482')
+    })
+
+    it('stdDeviation - it should return expected value with mixed positive/negative values', () => {
+      const values = [2, 3, -4, 5]
+
+      const dev = stdDeviation(values)
+      expect(dev instanceof BigNumber).to.be.true
+      return expect(dev.toFixed()).to.be.equal('3.35410196624968454461')
     })
 
     it('stdDeviation - it should return expected value with selector arg', () => {
@@ -92,6 +116,24 @@ module.exports = () => {
       const res = filterStdDeviated(values, 2000)
       expect(res.length).to.be.equal(1)
       return expect(res[0]).to.be.equal(10500)
+    })
+
+    it('filterStdDeviated - it should work with negative array', () => {
+      const values = [-2, -3, '-4', -5]
+
+      const res = filterStdDeviated(values, 1)
+      expect(res.length).to.be.equal(2)
+      const remaining = [-3, '-4']
+      return expect(res).to.satisfy(res => res.every(n => remaining.includes(n)))
+    })
+
+    it('filterStdDeviated - it should work with mixed positive/negative array', () => {
+      const values = [2, 3, '-4', 5]
+
+      const res = filterStdDeviated(values, 1)
+      expect(res.length).to.be.equal(3)
+      const remaining = [2, 3, 5]
+      return expect(res).to.satisfy(res => res.every(n => remaining.includes(n)))
     })
 
     it('filterDeviated - it should return expected value with selector arg', () => {
