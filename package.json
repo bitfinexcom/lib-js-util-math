@@ -2,7 +2,6 @@
   "name": "lib-js-util-math",
   "version": "0.0.1",
   "description": "Bitfinex JS Math Lib",
-  "private": true,
   "author": {
     "name": "prdn",
     "email": "paolo@bitfinex.com"
@@ -28,7 +27,8 @@
     "lint": "./node_modules/.bin/standard"
   },
   "dependencies": {
-    "bignumber.js": "^9.0.0"
+    "bignumber.js": "^9.0.0",
+    "decimal.js": "^10.2.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
