@@ -18,7 +18,7 @@ module.exports = () => {
     })
 
     it('VWAP - it return 0 with no values', () => {
-      return expect(VWAP([])).to.be.equal("0")
+      return expect(VWAP([])).to.be.equal('0')
     })
 
     it('VWAP - it should match the expected value', () => {
@@ -47,7 +47,7 @@ module.exports = () => {
       ]
 
       return expect(
-        EWVWAP.bind(null, values, { "bfx": 0.6, "bitstamp": 0.2, "kraken": 0.2 })
+        EWVWAP.bind(null, values, { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
       ).to.throw()
     })
 
@@ -62,7 +62,7 @@ module.exports = () => {
       ]
 
       return expect(
-        EWVWAP.bind(null, values, { "bfx": 0.6, "bitstamp": 0.2, "kraken": 0.2 })
+        EWVWAP.bind(null, values, { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
       ).to.throw()
     })
 
@@ -77,14 +77,14 @@ module.exports = () => {
       ]
 
       return expect(
-        EWVWAP.bind(null, values, { "bfx": 0.33, "bitstamp": 0.33, "kraken": 0.33 })
-      ).to.throw("ERR_INVALID_WEIGHT_CONF")
+        EWVWAP.bind(null, values, { 'bfx': 0.33, 'bitstamp': 0.33, 'kraken': 0.33 })
+      ).to.throw('ERR_INVALID_WEIGHT_CONF')
     })
 
     it('EWVWAP - it return 0 with no values', async () => {
       return expect(
-        VWAP([], { "bfx": 0.6, "bitstamp": 0.2, "kraken": 0.2 })
-      ).to.be.equal("0")
+        VWAP([], { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
+      ).to.be.equal('0')
     })
 
     it('EWVWAP - it should match the expected value', async () => {
@@ -99,7 +99,7 @@ module.exports = () => {
         { price: '10261.826', weightType: 'kraken', ts: now }
       ]
 
-      const res = EWVWAP(values, { "bfx": 0.6, "bitstamp": 0.2, "kraken": 0.2 })
+      const res = EWVWAP(values, { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
       return expect(res).to.be.equal('10251.016894')
     })
 

@@ -28,7 +28,7 @@ module.exports = () => {
 
       return expect(
         stdDeviation.bind(null, values)
-      ).to.throw("ERR_NUM_NAN")
+      ).to.throw('ERR_NUM_NAN')
     })
 
     it('stdDeviation - it should return expected value with valid config', () => {
