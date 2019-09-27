@@ -34,68 +34,8 @@ const validateBN = (value, opts = { allowNegative: true, allowZero: true, allowD
   if (opts.allowDecimals === false && /e|\./.test(n.toString())) throw new Error('ERR_NUM_WITH_PRECISION')
 }
 
-/**
- * @param {...(string|number|BigNumber)} values
- * @returns {BigNumber}
- */
-const safeSumBN = (...values) => {
-  let res = nBN(values[0])
-  for (let i = 1; i < values.length; i++) {
-    res = res.plus(values[i])
-  }
-  if (res.isNaN() || !res.isFinite()) throw new Error('ERR_NUM_NAN')
-  return res
-}
-
-/**
- * @param {...(string|number|BigNumber)} values First elem is subtracted by others
- * @returns {BigNumber}
- */
-const safeSubBN = (...values) => {
-  let res = nBN(values[0])
-  for (let i = 1; i < values.length; i++) {
-    res = res.minus(values[i])
-  }
-  if (res.isNaN() || !res.isFinite()) throw new Error('ERR_NUM_NAN')
-  return res
-}
-
-/**
- * @param {...(string|number|BigNumber)} values
- * @returns {BigNumber}
- */
-const safeMulBN = (...values) => {
-  let res = nBN(values[0])
-  for (let i = 1; i < values.length; i++) {
-    res = res.multipliedBy(values[i])
-  }
-  if (res.isNaN() || !res.isFinite()) throw new Error('ERR_NUM_NAN')
-  return res
-}
-
-/**
- * @param {...(string|number|BigNumber)} values First elem is divided by others
- * @returns {BigNumber}
- */
-const safeDivBN = (...values) => {
-  if (values.length < 2) throw new Error('ERR_INVALID_PARAMS')
-  const dividers = values.slice(1)
-  dividers.forEach(value => validateBN(value, { allowZero: false }))
-
-  let res = nBN(values[0])
-  for (let i = 1; i < values.length; i++) {
-    res = res.dividedBy(values[i])
-  }
-  if (res.isNaN() || !res.isFinite()) throw new Error('ERR_NUM_NAN')
-  return res
-}
-
 module.exports = {
   BN,
   nBN,
-  validateBN,
-  safeSumBN,
-  safeSubBN,
-  safeMulBN,
-  safeDivBN
+  validateBN
 }

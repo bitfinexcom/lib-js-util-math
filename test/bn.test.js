@@ -2,7 +2,7 @@
 
 const { BigNumber } = require('bignumber.js')
 const { expect } = require('chai')
-const { BN, nBN, validateBN, safeDivBN, safeMulBN, safeSubBN, safeSumBN } = require('../src/bn')
+const { BN, nBN, validateBN } = require('../src/bn')
 
 module.exports = () => {
   describe('# bn-tests', () => {
@@ -11,7 +11,7 @@ module.exports = () => {
     })
 
     it('nBN - should fail on invalid string as number', () => {
-      return expect(nBN.bind(null, 'aa')).to.throw()
+      return expect(nBN.bind(null, '12a')).to.throw()
     })
 
     it('nBN - should fail on invalid string as NaN', () => {
@@ -165,120 +165,6 @@ module.exports = () => {
       return expect(
         validateBN.bind(null, '-0.33')
       ).not.to.throw()
-    })
-
-    it('safeSumBN - it should fail on non number values', () => {
-      return expect(
-        safeSumBN.bind(null, 0, 'a', '-3')
-      ).to.throw()
-    })
-
-    it('safeSumBN - it should fail on NaN values', () => {
-      return expect(
-        safeSumBN.bind(null, 0, NaN)
-      ).to.throw()
-    })
-
-    it('safeSumBN - it should fail on infinite values', () => {
-      return expect(
-        safeSumBN.bind(null, 0, Infinity)
-      ).to.throw()
-    })
-
-    it('safeSumBN - it should produce right result for 0.1 + 0.2', () => {
-      const value = safeSumBN(0.1, 0.2)
-      return expect(value.toNumber()).to.be.equal(0.3)
-    })
-
-    it('safeSumBN - it should work with mixed values of string, number and BigNumber', () => {
-      const value = safeSumBN(3, '2.5', -1, nBN(33))
-      return expect(value.toNumber()).to.be.equal(37.5)
-    })
-
-    it('safeSubBN - it should fail on non number values', () => {
-      return expect(
-        safeSubBN.bind(null, 0, 'a', '-3')
-      ).to.throw()
-    })
-
-    it('safeSubBN - it should fail on NaN values', () => {
-      return expect(
-        safeSubBN.bind(null, 0, NaN)
-      ).to.throw()
-    })
-
-    it('safeSubBN - it should fail on infinite values', () => {
-      return expect(
-        safeSubBN.bind(null, 0, Infinity)
-      ).to.throw()
-    })
-
-    it('safeSubBN - it should work with mixed values of string, number and BigNumber', () => {
-      const value = safeSubBN(3, '2.5', -1, nBN(33))
-      return expect(value.toNumber()).to.be.equal(-31.5)
-    })
-
-    it('safeMulBN - it should fail on non number values', () => {
-      return expect(
-        safeMulBN.bind(null, 2, 'a', '-3')
-      ).to.throw()
-    })
-
-    it('safeMulBN - it should fail on NaN values', () => {
-      return expect(
-        safeMulBN.bind(null, 1, NaN)
-      ).to.throw()
-    })
-
-    it('safeMulBN - it should fail on infinite values', () => {
-      return expect(
-        safeMulBN.bind(null, 0, Infinity)
-      ).to.throw()
-    })
-
-    it('safeMulBN - it should work with mixed values of string, number and BigNumber', () => {
-      const value = safeMulBN(3, '2.5', -1, nBN(33))
-      return expect(value.toNumber()).to.be.equal(-247.5)
-    })
-
-    it('safeDivBN - it should fail on non number values', () => {
-      return expect(
-        safeDivBN.bind(null, 3, 'a', '-3')
-      ).to.throw()
-    })
-
-    it('safeDivBN - it should fail on NaN values', () => {
-      return expect(
-        safeDivBN.bind(null, 3, NaN)
-      ).to.throw()
-    })
-
-    it('safeDivBN - it should fail on infinite values', () => {
-      return expect(
-        safeDivBN.bind(null, 0, Infinity)
-      ).to.throw()
-    })
-
-    it('safeDivBN - it should fail on less then two values', () => {
-      return expect(
-        safeDivBN.bind(null, 5)
-      ).to.throw()
-    })
-
-    it('safeDivBN - it should fail with zero as divider', () => {
-      return expect(
-        safeDivBN.bind(null, 25, 5, 0)
-      ).to.throw()
-    })
-
-    it('safeDivBN - it should work with mixed args', () => {
-      const value = safeDivBN(4, nBN('2.5'))
-      return expect(value.toNumber()).to.be.equal(1.6)
-    })
-
-    it('safeDivBN - it should work 0 as first arg', () => {
-      const value = safeDivBN(0, '-5')
-      return expect(value.toNumber()).to.be.equal(0)
     })
 
   })
