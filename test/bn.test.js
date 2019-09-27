@@ -179,9 +179,9 @@ module.exports = () => {
       ).to.throw()
     })
 
-    it('safeSumBN - it should fail on less then two values', () => {
+    it('safeSumBN - it should fail on infinite values', () => {
       return expect(
-        safeSumBN.bind(null, 5)
+        safeSumBN.bind(null, 0, Infinity)
       ).to.throw()
     })
 
@@ -207,9 +207,9 @@ module.exports = () => {
       ).to.throw()
     })
 
-    it('safeSubBN - it should fail on less then two values', () => {
+    it('safeSubBN - it should fail on infinite values', () => {
       return expect(
-        safeSubBN.bind(null, 5)
+        safeSubBN.bind(null, 0, Infinity)
       ).to.throw()
     })
 
@@ -230,9 +230,9 @@ module.exports = () => {
       ).to.throw()
     })
 
-    it('safeMulBN - it should fail on less then two values', () => {
+    it('safeMulBN - it should fail on infinite values', () => {
       return expect(
-        safeMulBN.bind(null, 5)
+        safeMulBN.bind(null, 0, Infinity)
       ).to.throw()
     })
 
@@ -250,6 +250,12 @@ module.exports = () => {
     it('safeDivBN - it should fail on NaN values', () => {
       return expect(
         safeDivBN.bind(null, 3, NaN)
+      ).to.throw()
+    })
+
+    it('safeDivBN - it should fail on infinite values', () => {
+      return expect(
+        safeDivBN.bind(null, 0, Infinity)
       ).to.throw()
     })
 

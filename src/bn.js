@@ -39,12 +39,12 @@ const validateBN = (value, opts = { allowNegative: true, allowZero: true, allowD
  * @returns {BigNumber}
  */
 const safeSumBN = (...values) => {
-  if (values.length < 2) throw new Error('ERR_LEN_LESS_THAN_2')
-
-  return values.reduce(
-    (acc, curr) => acc.plus(nBN(curr)),
-    nBN(0)
-  )
+  let res = nBN(values[0])
+  for (let i = 1; i < values.length; i++) {
+    res = res.plus(values[i])
+  }
+  if (res.isNaN() || !res.isFinite()) throw new Error('ERR_NUM_NAN')
+  return res
 }
 
 /**
@@ -52,12 +52,12 @@ const safeSumBN = (...values) => {
  * @returns {BigNumber}
  */
 const safeSubBN = (...values) => {
-  if (values.length < 2) throw new Error('ERR_LEN_LESS_THAN_2')
-
-  return values.slice(1).reduce(
-    (acc, curr) => acc.minus(nBN(curr)),
-    nBN(values[0])
-  )
+  let res = nBN(values[0])
+  for (let i = 1; i < values.length; i++) {
+    res = res.minus(values[i])
+  }
+  if (res.isNaN() || !res.isFinite()) throw new Error('ERR_NUM_NAN')
+  return res
 }
 
 /**
@@ -65,12 +65,12 @@ const safeSubBN = (...values) => {
  * @returns {BigNumber}
  */
 const safeMulBN = (...values) => {
-  if (values.length < 2) throw new Error('ERR_LEN_LESS_THAN_2')
-
-  return values.reduce(
-    (acc, curr) => acc.multipliedBy(nBN(curr)),
-    nBN(1)
-  )
+  let res = nBN(values[0])
+  for (let i = 1; i < values.length; i++) {
+    res = res.multipliedBy(values[i])
+  }
+  if (res.isNaN() || !res.isFinite()) throw new Error('ERR_NUM_NAN')
+  return res
 }
 
 /**
@@ -78,16 +78,16 @@ const safeMulBN = (...values) => {
  * @returns {BigNumber}
  */
 const safeDivBN = (...values) => {
-  if (values.length < 2) throw new Error('ERR_LEN_LESS_THAN_2')
-  validateBN(values[0])
-
+  if (values.length < 2) throw new Error('ERR_INVALID_PARAMS')
   const dividers = values.slice(1)
   dividers.forEach(value => validateBN(value, { allowZero: false }))
 
-  return dividers.reduce(
-    (acc, curr) => acc.dividedBy(nBN(curr)),
-    nBN(values[0])
-  )
+  let res = nBN(values[0])
+  for (let i = 1; i < values.length; i++) {
+    res = res.dividedBy(values[i])
+  }
+  if (res.isNaN() || !res.isFinite()) throw new Error('ERR_NUM_NAN')
+  return res
 }
 
 module.exports = {
