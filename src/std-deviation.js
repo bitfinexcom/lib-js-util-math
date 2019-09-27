@@ -1,6 +1,6 @@
 'use strict'
 
-const { nBN } = require('./bn')
+const { nBN, validateBN } = require('./bn')
 
 /**
  * @param {any[]} values
@@ -8,6 +8,9 @@ const { nBN } = require('./bn')
  * @returns {BigNumber}
  */
 const stdDeviation = (values, selector = null) => {
+  if (values.length === 0) throw new Error('ERR_NO_VALUES_PROVIDED')
+  values.forEach(value => validateBN(selector ? selector(value) : value))
+
   const avg = values.reduce(
     (sum, curr) => sum.plus(selector ? selector(curr) : curr),
     nBN(0)
