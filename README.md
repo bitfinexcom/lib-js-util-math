@@ -1,7 +1,6 @@
 # lib-js-util-math
 
 The lib includes the utilities depicted below:
-- `Number` - Decimal number utilities
 - `BN` - BigNumber utilities
 - `VWAP` - Volume Weighted Average Price (VWAP) index utilities
 - `Standard Deviation` - Standard deviation utilities
