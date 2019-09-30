@@ -17,6 +17,11 @@ const nBN = (value) => {
   if (value === 'Infinity' || value === '-Infinity' ||
     value === Infinity || value === -Infinity) throw new Error('ERR_NUM_INFINITE')
 
+  if ((value instanceof BigNumber) &&
+    (value.isNaN() || !value.isFinite())) {
+    throw new Error('ERR_NUM_NAN')
+  }
+
   try {
     return new BigNumber(value)
   } catch (err) {
