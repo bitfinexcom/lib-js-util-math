@@ -2,7 +2,7 @@
 
 const { expect } = require('chai')
 const { BN } = require('../src/bn')
-const { stdDeviation, filterStdDeviated } = require('../src/std-deviation')
+const { stdDeviation, filterStdDeviated, zScore } = require('../src/std-deviation')
 const BigNumber = BN()
 
 module.exports = () => {
@@ -78,11 +78,27 @@ module.exports = () => {
       return expect(dev.toString()).to.be.equal('2980.16591633568094682823')
     })
 
+    it('zScore - it should calculate the expected value', () => {
+      return expect(zScore.bind(null, 33, null, 25)).to.throw()
+    })
+
+    it('zScore - it should return NaN on NaN values', () => {
+      return expect(zScore.bind(null, 190, NaN, 25)).to.throw()
+    })
+
+    it('zScore - it should return infinity on divide by zero', () => {
+      return expect(zScore.bind(null, 190, 150, 0)).to.throw()
+    })
+
+    it('zScore - it should calculate the expected value', () => {
+      return expect(zScore(190, 150, 25).toString()).to.be.equal('1.6')
+    })
+
     it('filterStdDeviated - it should fail with invalid input', () => {
       const values = ['10161', { price: '10261.235', amount: '1' }]
 
       return expect(
-        filterStdDeviated.bind(null, values, 2000)
+        filterStdDeviated.bind(null, values, 1)
       ).to.throw()
     })
 
@@ -90,7 +106,7 @@ module.exports = () => {
       const values = ['10152.235', 'a10261.235']
 
       return expect(
-        filterStdDeviated.bind(null, values, 2000)
+        filterStdDeviated.bind(null, values, 1)
       ).to.throw()
     })
 
@@ -105,15 +121,15 @@ module.exports = () => {
     it('filterStdDeviated - it should return expected value with valid config', () => {
       const values = [10500, 10700, 11500, '12300', 5000, 5100]
 
-      const res = filterStdDeviated(values, '2000')
-      const remaining = [10500, 10700, 11500, '12300']
+      const res = filterStdDeviated(values, '1')
+      const remaining = [10500, 10700, 11500]
       return expect(res).to.satisfy(res => res.every(n => remaining.includes(n)))
     })
 
     it('filterStdDeviated - it should work with single item in array', () => {
       const values = [10500]
 
-      const res = filterStdDeviated(values, 2000)
+      const res = filterStdDeviated(values, 1)
       expect(res.length).to.be.equal(1)
       return expect(res[0]).to.be.equal(10500)
     })
@@ -131,8 +147,8 @@ module.exports = () => {
       const values = [2, 3, '-4', 5]
 
       const res = filterStdDeviated(values, 1)
-      expect(res.length).to.be.equal(3)
-      const remaining = [2, 3, 5]
+      expect(res.length).to.be.equal(2)
+      const remaining = [2, 3]
       return expect(res).to.satisfy(res => res.every(n => remaining.includes(n)))
     })
 
@@ -146,8 +162,8 @@ module.exports = () => {
         { price: 5100, amount: '1' },
       ]
 
-      const res = filterStdDeviated(values, '2000', (a) => a.price)
-      const remaining = [10500, 10700, 11500, '12300']
+      const res = filterStdDeviated(values, '1', (a) => a.price)
+      const remaining = [10500, 10700, 11500]
       return expect(res).to.satisfy(res => res.every(a => remaining.includes(a.price)))
     })
 
