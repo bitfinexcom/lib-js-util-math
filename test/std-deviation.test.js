@@ -36,7 +36,7 @@ module.exports = () => {
 
       const dev = stdDeviation(values)
       expect(dev instanceof BigNumber).to.be.true
-      return expect(dev.toFixed()).to.be.equal('2980.16591633568094682823')
+      return expect(dev.toString()).to.be.equal('2980.16591633568094682823')
     })
 
     it('stdDeviation - it should work with single item in array', () => {
@@ -44,7 +44,7 @@ module.exports = () => {
 
       const dev = stdDeviation(values)
       expect(dev instanceof BigNumber).to.be.true
-      return expect(dev.toFixed()).to.be.equal('0')
+      return expect(dev.toString()).to.be.equal('0')
     })
 
     it('stdDeviation - it should return expected value with negative values', () => {
@@ -52,7 +52,7 @@ module.exports = () => {
 
       const dev = stdDeviation(values)
       expect(dev instanceof BigNumber).to.be.true
-      return expect(dev.toFixed()).to.be.equal('1.1180339887498948482')
+      return expect(dev.toString()).to.be.equal('1.1180339887498948482')
     })
 
     it('stdDeviation - it should return expected value with mixed positive/negative values', () => {
@@ -60,7 +60,7 @@ module.exports = () => {
 
       const dev = stdDeviation(values)
       expect(dev instanceof BigNumber).to.be.true
-      return expect(dev.toFixed()).to.be.equal('3.35410196624968454461')
+      return expect(dev.toString()).to.be.equal('3.35410196624968454461')
     })
 
     it('stdDeviation - it should return expected value with selector arg', () => {
@@ -75,7 +75,7 @@ module.exports = () => {
 
       const dev = stdDeviation(values, (a) => a.price)
       expect(dev instanceof BigNumber).to.be.true
-      return expect(dev.toFixed()).to.be.equal('2980.16591633568094682823')
+      return expect(dev.toString()).to.be.equal('2980.16591633568094682823')
     })
 
     it('filterStdDeviated - it should fail with invalid input', () => {

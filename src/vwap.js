@@ -23,8 +23,8 @@ const VWAP = (values) => {
     y = y.plus(value.volume)
   }
 
-  if (y.toFixed(0) === '0') throw new Error('ERR_WEIGHT_SUM_ZERO')
-  return x.dividedBy(y).toFixed()
+  if (y.toString() === '0') throw new Error('ERR_WEIGHT_SUM_ZERO')
+  return x.dividedBy(y).toString()
 }
 
 /**
@@ -44,7 +44,7 @@ const EWVWAP = (values, weights) => {
     sum = sum.plus(value)
   })
 
-  if (sum.toFixed() !== '1') throw new Error('ERR_INVALID_WEIGHT_CONF')
+  if (sum.toString() !== '1') throw new Error('ERR_INVALID_WEIGHT_CONF')
 
   const prices = {}
   for (let i = 0; i < values.length; i++) {
@@ -66,8 +66,8 @@ const EWVWAP = (values, weights) => {
     y = y.plus(weights[key])
   })
 
-  if (y.toFixed(0) === '0') throw new Error('ERR_WEIGHT_SUM_ZERO')
-  return x.dividedBy(y).toFixed()
+  if (y.toString() === '0') throw new Error('ERR_WEIGHT_SUM_ZERO')
+  return x.dividedBy(y).toString()
 }
 
 module.exports = {
