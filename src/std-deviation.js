@@ -5,7 +5,6 @@ const { nBN, validateBN } = require('./bn')
 /**
  * @param {any[]} values
  * @param {(a) => string|number} selector Optional selector lambda, if not provided item will be used as value
- * @returns {BigNumber}
  */
 const stdDeviation = (values, selector = null) => {
   if (values.length === 0) throw new Error('ERR_NO_VALUES_PROVIDED')
@@ -30,31 +29,32 @@ const stdDeviation = (values, selector = null) => {
  * @param {string|number} threshold
  * @param {(a) => string|number} selector Optional selector lambda, if not provided item will be used as value
  */
-const filterStdDeviated = (values, threshold, selector) => {
+const filterStdDeviated = (values, threshold = 1, selector = null) => {
   const dev = stdDeviation(values, selector)
-  if (dev.isLessThanOrEqualTo(threshold)) return values
+  if (dev.isZero()) return values
 
-  const devVector = {}
-  for (let i = 0; i < values.length; i++) {
-    const a = selector ? selector(values[i]) : values[i]
-    for (let j = 0; j < values.length; j++) {
-      if (i === j) continue
-      const b = selector ? selector(values[j]) : values[j]
-      const diff = nBN(a).minus(b).abs()
-      devVector[i] = (devVector[i] || 0) + (diff.isGreaterThan(dev) ? 1 : 0)
-    }
-  }
+  const mean = values.reduce(
+    (sum, curr) => sum.plus(selector ? selector(curr) : curr),
+    nBN(0)
+  ).dividedBy(values.length)
 
-  let max = 0
-  for (const key in devVector) {
-    if (devVector[key] > max) max = devVector[key]
-  }
+  return values.filter(value =>
+    zScore(selector ? selector(value) : value, mean, dev)
+      .abs().isLessThanOrEqualTo(threshold))
+}
 
-  return max === 0 ? values
-    : values.filter((p, i) => devVector[i] !== max)
+/**
+ * @param {string|number} value i-th value
+ * @param {string|number} mean Average of values
+ * @param {string|number} dev Standard deviation
+ */
+const zScore = (value, mean, dev) => {
+  const calc = nBN(value).minus(mean).dividedBy(dev)
+  return nBN(calc) // validates result
 }
 
 module.exports = {
   stdDeviation,
-  filterStdDeviated
+  filterStdDeviated,
+  zScore
 }
