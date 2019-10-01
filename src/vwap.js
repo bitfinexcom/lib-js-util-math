@@ -28,7 +28,7 @@ const VWAP = (values) => {
 }
 
 /**
- * @param {{price: string|number, weightType: string, ts: number}[]} values
+ * @param {{price: string|number, weightType: string}[]} values
  * @param {{[key: string]: number}} weights e.g {'bfx': 0.7, 'kraken': 0.3}, sum of all weights must be equal to 1
  * @returns {string}
  */
@@ -46,25 +46,30 @@ const EWVWAP = (values, weights) => {
 
   if (sum.toString() !== '1') throw new Error('ERR_INVALID_WEIGHT_CONF')
 
-  const prices = {}
+  // validations
+  const dupKeys = []
   for (let i = 0; i < values.length; i++) {
-    const elem = values[i]
-    if (!prices[elem.weightType]) {
-      prices[elem.weightType] = elem
-    } else if (prices[elem.weightType].ts < elem.ts) {
-      prices[elem.weightType] = elem
+    const value = values[i]
+    if (dupKeys.includes(value.weightType)) {
+      throw new Error('ERR_DUP_WEIGHT_PRICES')
     }
+    dupKeys.push(value.weightType)
+
+    if (!weightKeys.includes(value.weightType)) {
+      throw new Error('ERR_INVALID_WEIGHT_TYPE')
+    }
+
+    validateBN(value.price, { allowNegative: false, allowZero: false })
   }
 
   let x = nBN(0)
   let y = nBN(0)
-  Object.keys(prices).forEach(key => {
-    const value = prices[key]
-    validateBN(value.price, { allowNegative: false, allowZero: false })
-
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i]
+    const key = value.weightType
     x = x.plus(nBN(value.price).multipliedBy(weights[key]))
     y = y.plus(weights[key])
-  })
+  }
 
   if (y.toString() === '0') throw new Error('ERR_WEIGHT_SUM_ZERO')
   return x.dividedBy(y).toString()
