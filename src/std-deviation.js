@@ -38,6 +38,7 @@ const filterStdDeviated = (values, threshold = 1, selector = null) => {
     nBN(0)
   ).dividedBy(values.length)
 
+  threshold = nBN(threshold).abs()
   return values.filter(value =>
     zScore(selector ? selector(value) : value, mean, dev)
       .abs().isLessThanOrEqualTo(threshold))

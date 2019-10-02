@@ -78,15 +78,15 @@ module.exports = () => {
       return expect(dev.toString()).to.be.equal('2980.16591633568094682823')
     })
 
-    it('zScore - it should calculate the expected value', () => {
+    it('zScore - it should throw on null value', () => {
       return expect(zScore.bind(null, 33, null, 25)).to.throw()
     })
 
-    it('zScore - it should return NaN on NaN values', () => {
+    it('zScore - it should throw on NaN values', () => {
       return expect(zScore.bind(null, 190, NaN, 25)).to.throw()
     })
 
-    it('zScore - it should return infinity on divide by zero', () => {
+    it('zScore - it should throw on divide by zero', () => {
       return expect(zScore.bind(null, 190, 150, 0)).to.throw()
     })
 
