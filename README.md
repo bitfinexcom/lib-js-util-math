@@ -4,6 +4,8 @@ The lib includes the utilities depicted below:
 - `BN` - BigNumber utilities
 - `VWAP` - Volume Weighted Average Price (VWAP) index utilities
 - `Standard Deviation` - Standard deviation utilities
+- `SMA` - Simple Moving Average 
+- `EMA` - Exponential Moving Average 
 
 ## Installing
 ```console
