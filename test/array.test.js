@@ -5,7 +5,7 @@ const { nBN } = require('../src/bn')
 const { avg, max, min } = require('../src/array')
 
 module.exports = () => {
-  describe('# sma-tests', () => {
+  describe('# array-tests', () => {
 
     it('avg - it should fail with non numeric values', () => {
       const values = ['10161', 'a10261.235']

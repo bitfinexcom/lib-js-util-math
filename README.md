@@ -7,6 +7,7 @@ The lib includes the utilities depicted below:
 - `Standard Deviation` - Standard deviation utilities
 - `SMA` - Simple Moving Average 
 - `EMA` - Exponential Moving Average 
+- `TWAP` - Time Weighted Average Price utilities
 
 ## Installing
 ```console

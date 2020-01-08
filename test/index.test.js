@@ -5,6 +5,7 @@ const vwap = require('./vwap.test')
 const stdDeviation = require('./std-deviation.test')
 const array = require('./array.test')
 const ema = require('./ema.test')
+const twap = require('./twap.test')
 
 describe('*** Unit testing! ***', () => {
   bn()
@@ -12,4 +13,5 @@ describe('*** Unit testing! ***', () => {
   stdDeviation()
   array()
   ema()
+  twap()
 })
