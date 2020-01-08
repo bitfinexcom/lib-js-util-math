@@ -105,25 +105,25 @@ module.exports = () => {
       const prices = ['10001', 10002, nBN(10003)]
       const res = kline(prices)
 
-      expect(res.close).to.be.equal('10001')
+      expect(res.open).to.be.equal('10001')
       expect(res.high).to.be.equal('10003')
       expect(res.low).to.be.equal('10001')
-      expect(res.open).to.be.equal('10003')
+      expect(res.close).to.be.equal('10003')
     })
 
     it('kline - it should work with complex types', () => {
       const now = Date.now()
       const prices = [
-        { price: 10001, ts: now },
+        { price: 10001, ts: now - 2000 },
         { price: 10002, ts: now - 1000 },
-        { price: 10003, ts: now - 2000 }
+        { price: 10003, ts: now }
       ]
       const res = kline(prices, (a) => a.price)
 
-      expect(res.close).to.be.equal('10001')
+      expect(res.open).to.be.equal('10001')
       expect(res.high).to.be.equal('10003')
       expect(res.low).to.be.equal('10001')
-      expect(res.open).to.be.equal('10003')
+      expect(res.close).to.be.equal('10003')
     })
 
     it('typicalPrice - it should fail with empty array', () => {

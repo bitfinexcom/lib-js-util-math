@@ -54,8 +54,8 @@ const groupBySize = (values, size, selector = null) => {
 const kline = (values, selector = null) => {
   const last = values.length - 1
 
-  const close = nBN(selector ? selector(values[0]) : values[0]).toString()
-  const open = nBN(selector ? selector(values[last]) : values[last]).toString()
+  const open = nBN(selector ? selector(values[0]) : values[0]).toString()
+  const close = nBN(selector ? selector(values[last]) : values[last]).toString()
   const low = min(values, selector)
   const high = max(values, selector)
 
