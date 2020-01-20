@@ -1,6 +1,8 @@
 'use strict'
 
-const { expect } = require('chai')
+const chai = require('chai')
+  .use(require('dirty-chai'))
+const { expect } = chai
 const { BN } = require('../src/bn')
 const { stdDeviation, filterStdDeviated, zScore } = require('../src/std-deviation')
 const BigNumber = BN()
@@ -35,7 +37,7 @@ module.exports = () => {
       const values = [10500, 10700, 11500, '12300', 5000, 5100]
 
       const dev = stdDeviation(values)
-      expect(dev instanceof BigNumber).to.be.true
+      expect(dev instanceof BigNumber).to.be.true()
       return expect(dev.toString()).to.be.equal('2980.16591633568094682823')
     })
 
@@ -43,7 +45,7 @@ module.exports = () => {
       const values = [10500]
 
       const dev = stdDeviation(values)
-      expect(dev instanceof BigNumber).to.be.true
+      expect(dev instanceof BigNumber).to.be.true()
       return expect(dev.toString()).to.be.equal('0')
     })
 
@@ -51,7 +53,7 @@ module.exports = () => {
       const values = [-2, -3, -4, -5]
 
       const dev = stdDeviation(values)
-      expect(dev instanceof BigNumber).to.be.true
+      expect(dev instanceof BigNumber).to.be.true()
       return expect(dev.toString()).to.be.equal('1.1180339887498948482')
     })
 
@@ -59,7 +61,7 @@ module.exports = () => {
       const values = [2, 3, -4, 5]
 
       const dev = stdDeviation(values)
-      expect(dev instanceof BigNumber).to.be.true
+      expect(dev instanceof BigNumber).to.be.true()
       return expect(dev.toString()).to.be.equal('3.35410196624968454461')
     })
 
@@ -70,11 +72,11 @@ module.exports = () => {
         { price: 11500, amount: '1' },
         { price: '12300', amount: '1' },
         { price: 5000, amount: '1' },
-        { price: 5100, amount: '1' },
+        { price: 5100, amount: '1' }
       ]
 
       const dev = stdDeviation(values, (a) => a.price)
-      expect(dev instanceof BigNumber).to.be.true
+      expect(dev instanceof BigNumber).to.be.true()
       return expect(dev.toString()).to.be.equal('2980.16591633568094682823')
     })
 
@@ -159,13 +161,12 @@ module.exports = () => {
         { price: 11500, amount: '1' },
         { price: '12300', amount: '1' },
         { price: 5000, amount: '1' },
-        { price: 5100, amount: '1' },
+        { price: 5100, amount: '1' }
       ]
 
       const res = filterStdDeviated(values, '1', (a) => a.price)
       const remaining = [10500, 10700, 11500]
       return expect(res).to.satisfy(res => res.every(a => remaining.includes(a.price)))
     })
-
   })
 }

@@ -1,11 +1,12 @@
 'use strict'
 
-const { expect } = require('chai')
+const chai = require('chai')
+  .use(require('dirty-chai'))
+const { expect } = chai
 const { EMA, multiplier } = require('../src/ema')
 
 module.exports = () => {
   describe('# ema-tests', () => {
-
     it('multiplier - it should fail with non numeric values', () => {
       return expect(
         multiplier.bind(null, 'a23')

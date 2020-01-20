@@ -1,97 +1,99 @@
 'use strict'
 
-const { expect } = require('chai')
+const chai = require('chai')
+  .use(require('dirty-chai'))
+const { expect } = chai
 const { nBN } = require('../src/bn')
 const { groupBySize, kline, typicalPrice, TWAP } = require('../src/twap')
 
 module.exports = () => {
-  it('groupBySize - it should fail with empty array', () => {
-    return expect(
-      groupBySize.bind(null, [], 100)
-    ).to.throw()
-  })
-
-  it('groupBySize - it should fail with interval <= 0', () => {
-    return expect(
-      groupBySize.bind(null, [123], 0)
-    ).to.throw()
-  })
-
-  it('groupBySize - it should fail with mixed positive/negative values', () => {
-    return expect(
-      groupBySize.bind(null, [-123, 123], 100)
-    ).to.throw()
-  })
-
-  it('groupBySize - it should fail with invalid values', () => {
-    return expect(
-      groupBySize.bind(null, ['-a123', 123], 100)
-    ).to.throw()
-  })
-
-  it('groupBySize - it should work with just one item', () => {
-    const res = groupBySize(['123'], 300)
-    expect(res).to.be.an('array')
-    expect(res.length).to.be.equal(1)
-    expect(res[0]).to.be.an('array')
-    expect(res[0].length).to.be.equal(1)
-    return expect(res[0][0]).to.be.equal('123')
-  })
-
-  it('groupBySize - it should work with primitive types', () => {
-    const res = groupBySize([100, 200, 300, 400, 500, 600, 1000, 1100, 1200], 300)
-    expect(res).to.be.an('array')
-    expect(res.length).to.be.equal(4)
-    const expected = [[100, 200, 300], [400, 500, 600], [], [1000, 1100, 1200]]
-    res.forEach((g, i) => {
-      const e = expected[i]
-      expect(g.length).to.be.equal(e.length)
-      g.forEach((item, j) => {
-        expect(item).to.be.equal(e[j])
-      })
-    })
-  })
-
-  it('groupBySize - it should work with negative prices', () => {
-    const res = groupBySize([-100, -200, -300, -400, -500, -600, -1000, -1100, -1200], 300)
-    expect(res).to.be.an('array')
-    expect(res.length).to.be.equal(4)
-    const expected = [[-1200, -1100, -1000], [], [-600, -500, -400], [-300, -200, -100]]
-    res.forEach((g, i) => {
-      const e = expected[i]
-      expect(g.length).to.be.equal(e.length)
-      g.forEach((item, j) => {
-        expect(item).to.be.equal(e[j])
-      })
-    })
-  })
-
-  it('groupBySize - it should work with complex types', () => {
-    const now = Date.now()
-    const prices = [
-      { price: '10003', ts: now - 9000 },
-      { price: '10000', ts: now - 4000 },
-      { price: '10003', ts: now - 6000 },
-      { price: '10001', ts: now - 5000 },
-      { price: '10003', ts: now - 8000 }
-    ]
-    const expected = [
-      [{ price: '10003', ts: now - 9000 }, { price: '10003', ts: now - 8000 }],
-      [{ price: '10003', ts: now - 6000 }, { price: '10001', ts: now - 5000 }, { price: '10000', ts: now - 4000 }]
-    ]
-
-    const res = groupBySize(prices, 3000, (a) => a.ts)
-    expect(res.length).to.be.equal(2)
-    res.forEach((g, i) => {
-      const e = expected[i]
-      expect(g.length).to.be.equal(e.length)
-      g.forEach((item, j) => {
-        expect(item.ts).to.be.equal(e[j].ts)
-      })
-    })
-  })
-
   describe('# twap-tests', () => {
+    it('groupBySize - it should fail with empty array', () => {
+      return expect(
+        groupBySize.bind(null, [], 100)
+      ).to.throw()
+    })
+
+    it('groupBySize - it should fail with interval <= 0', () => {
+      return expect(
+        groupBySize.bind(null, [123], 0)
+      ).to.throw()
+    })
+
+    it('groupBySize - it should fail with mixed positive/negative values', () => {
+      return expect(
+        groupBySize.bind(null, [-123, 123], 100)
+      ).to.throw()
+    })
+
+    it('groupBySize - it should fail with invalid values', () => {
+      return expect(
+        groupBySize.bind(null, ['-a123', 123], 100)
+      ).to.throw()
+    })
+
+    it('groupBySize - it should work with just one item', () => {
+      const res = groupBySize(['123'], 300)
+      expect(res).to.be.an('array')
+      expect(res.length).to.be.equal(1)
+      expect(res[0]).to.be.an('array')
+      expect(res[0].length).to.be.equal(1)
+      return expect(res[0][0]).to.be.equal('123')
+    })
+
+    it('groupBySize - it should work with primitive types', () => {
+      const res = groupBySize([100, 200, 300, 400, 500, 600, 1000, 1100, 1200], 300)
+      expect(res).to.be.an('array')
+      expect(res.length).to.be.equal(4)
+      const expected = [[100, 200, 300], [400, 500, 600], [], [1000, 1100, 1200]]
+      res.forEach((g, i) => {
+        const e = expected[i]
+        expect(g.length).to.be.equal(e.length)
+        g.forEach((item, j) => {
+          expect(item).to.be.equal(e[j])
+        })
+      })
+    })
+
+    it('groupBySize - it should work with negative prices', () => {
+      const res = groupBySize([-100, -200, -300, -400, -500, -600, -1000, -1100, -1200], 300)
+      expect(res).to.be.an('array')
+      expect(res.length).to.be.equal(4)
+      const expected = [[-1200, -1100, -1000], [], [-600, -500, -400], [-300, -200, -100]]
+      res.forEach((g, i) => {
+        const e = expected[i]
+        expect(g.length).to.be.equal(e.length)
+        g.forEach((item, j) => {
+          expect(item).to.be.equal(e[j])
+        })
+      })
+    })
+
+    it('groupBySize - it should work with complex types', () => {
+      const now = Date.now()
+      const prices = [
+        { price: '10003', ts: now - 9000 },
+        { price: '10000', ts: now - 4000 },
+        { price: '10003', ts: now - 6000 },
+        { price: '10001', ts: now - 5000 },
+        { price: '10003', ts: now - 8000 }
+      ]
+      const expected = [
+        [{ price: '10003', ts: now - 9000 }, { price: '10003', ts: now - 8000 }],
+        [{ price: '10003', ts: now - 6000 }, { price: '10001', ts: now - 5000 }, { price: '10000', ts: now - 4000 }]
+      ]
+
+      const res = groupBySize(prices, 3000, (a) => a.ts)
+      expect(res.length).to.be.equal(2)
+      res.forEach((g, i) => {
+        const e = expected[i]
+        expect(g.length).to.be.equal(e.length)
+        g.forEach((item, j) => {
+          expect(item.ts).to.be.equal(e[j].ts)
+        })
+      })
+    })
+
     it('kline - it should fail with empty array', () => {
       return expect(kline.bind(null, [])).to.throw()
     })

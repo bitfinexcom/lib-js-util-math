@@ -31,13 +31,19 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "dirty-chai": "^2.0.1",
     "husky": "^3.0.5",
     "mocha": "^5.2.0",
     "standard": "^14.3.1"
   },
   "standard": {
-    "ignore": [
-      "/test/**/*.js"
+    "globals": [
+      "it",
+      "describe",
+      "before",
+      "after",
+      "beforeEach",
+      "afterEach"
     ]
   },
   "husky": {
