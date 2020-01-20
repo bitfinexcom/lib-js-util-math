@@ -6,6 +6,7 @@ const stdDeviation = require('./std-deviation.test')
 const array = require('./array.test')
 const ema = require('./ema.test')
 const twap = require('./twap.test')
+const impactMidPriceTests = require('./impact-mid-price.test')
 
 describe('*** Unit testing! ***', () => {
   bn()
@@ -14,4 +15,5 @@ describe('*** Unit testing! ***', () => {
   array()
   ema()
   twap()
+  impactMidPriceTests()
 })

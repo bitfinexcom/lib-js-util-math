@@ -8,6 +8,7 @@ The lib includes the utilities depicted below:
 - `SMA` - Simple Moving Average 
 - `EMA` - Exponential Moving Average 
 - `TWAP` - Time Weighted Average Price utilities
+- `Impact mid price` - Mid price from bids and asks until specific book depth
 
 ## Installing
 ```console
