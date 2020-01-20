@@ -1,15 +1,16 @@
 'use strict'
 
-const { expect } = require('chai')
+const chai = require('chai')
+  .use(require('dirty-chai'))
+const { expect } = chai
 const { VWAP, EWVWAP } = require('../src/vwap')
 
 module.exports = () => {
   describe('# vwap-tests', () => {
-
     it('VWAP - it should fail with non numeric values', () => {
       const values = [
         { price: '10161', volume: '1' },
-        { price: 'a10261.235', volume: '1' },
+        { price: 'a10261.235', volume: '1' }
       ]
 
       return expect(
@@ -44,7 +45,7 @@ module.exports = () => {
       ]
 
       return expect(
-        EWVWAP.bind(null, values, { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
+        EWVWAP.bind(null, values, { bfx: 0.6, bitstamp: 0.2, kraken: 0.2 })
       ).to.throw()
     })
 
@@ -56,7 +57,7 @@ module.exports = () => {
       ]
 
       return expect(
-        EWVWAP.bind(null, values, { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
+        EWVWAP.bind(null, values, { bfx: 0.6, bitstamp: 0.2, kraken: 0.2 })
       ).to.throw()
     })
 
@@ -68,7 +69,7 @@ module.exports = () => {
       ]
 
       return expect(
-        EWVWAP.bind(null, values, { 'bfx': 0.33, 'bitstamp': 0.33, 'kraken': 0.33 })
+        EWVWAP.bind(null, values, { bfx: 0.33, bitstamp: 0.33, kraken: 0.33 })
       ).to.throw('ERR_INVALID_WEIGHT_CONF')
     })
 
@@ -81,7 +82,7 @@ module.exports = () => {
       ]
 
       return expect(
-        EWVWAP.bind(null, values, { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
+        EWVWAP.bind(null, values, { bfx: 0.6, bitstamp: 0.2, kraken: 0.2 })
       ).to.throw('ERR_INVALID_WEIGHT_TYPE')
     })
 
@@ -96,13 +97,13 @@ module.exports = () => {
       ]
 
       return expect(
-        EWVWAP.bind(null, values, { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
+        EWVWAP.bind(null, values, { bfx: 0.6, bitstamp: 0.2, kraken: 0.2 })
       ).to.throw('ERR_DUP_WEIGHT_PRICES')
     })
 
     it('EWVWAP - it return 0 with no values', async () => {
       return expect(
-        VWAP([], { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
+        VWAP([], { bfx: 0.6, bitstamp: 0.2, kraken: 0.2 })
       ).to.be.equal('0')
     })
 
@@ -113,9 +114,8 @@ module.exports = () => {
         { price: '10261.826', weightType: 'kraken' }
       ]
 
-      const res = EWVWAP(values, { 'bfx': 0.6, 'bitstamp': 0.2, 'kraken': 0.2 })
+      const res = EWVWAP(values, { bfx: 0.6, bitstamp: 0.2, kraken: 0.2 })
       return expect(res).to.be.equal('10251.016894')
     })
-
   })
 }

@@ -1,7 +1,9 @@
 'use strict'
 
 const { BigNumber } = require('bignumber.js')
-const { expect } = require('chai')
+const chai = require('chai')
+  .use(require('dirty-chai'))
+const { expect } = chai
 const { BN, nBN, validateBN } = require('../src/bn')
 
 module.exports = () => {
@@ -166,6 +168,5 @@ module.exports = () => {
         validateBN.bind(null, '-0.33')
       ).not.to.throw()
     })
-
   })
 }
