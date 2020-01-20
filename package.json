@@ -1,6 +1,6 @@
 {
   "name": "@bitfinex/lib-js-util-math",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Bitfinex JS Math Lib",
   "author": {
     "name": "prdn",
