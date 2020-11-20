@@ -2,7 +2,7 @@
 
 The lib includes the utilities depicted below:
 - `BN` - BigNumber utilities
-- `Array utilites` - Array utilites like min, max and avg with big number manipulation
+- `Array utilites` - Array utilites like min, max, median and avg with big number manipulation
 - `VWAP` - Volume Weighted Average Price (VWAP) index utilities
 - `Standard Deviation` - Standard deviation utilities
 - `SMA` - Simple Moving Average 
