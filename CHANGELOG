@@ -1,0 +1,29 @@
+# 0.7.0
+- feature: median of array
+- feature: array filter based on median
+
+# 0.6.0
+- feature: impact mid price for order books
+- chore: packge renamed to @bitfinex/lib-js-util-math
+
+# 0.5.0
+- feature: TWAP index
+- bugfix: kline candle fix 
+
+# 0.4.0
+- feature: array utils
+
+# 0.3.0
+- feature: EMA index
+- feature: SMA index
+
+# 0.2.0
+- chore: improved big number utilities
+
+# 0.1.1
+- fix: big number bug fixes
+
+# 0.1.0
+- feature: big number utilities
+- feature: VWAP
+- feature: standard deviation
