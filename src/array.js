@@ -67,9 +67,10 @@ const median = (values, selector = null) => {
   if (values.length === 0) throw new Error('ERR_NO_VALUES_PROVIDED')
 
   const sorted = [...values].sort((a, b) => {
-    return nBN(selector ? selector(a) : a)
+    const res = nBN(selector ? selector(a) : a)
       .minus(selector ? selector(b) : b)
-      .lt(0) ? -1 : 1
+      .lt(0)
+    return res ? -1 : 1
   })
   const middleIndex = nBN(sorted.length).minus(1).div(2)
 

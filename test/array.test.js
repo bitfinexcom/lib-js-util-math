@@ -267,7 +267,7 @@ module.exports = () => {
       ]
 
       const filtered = samples.map(values => filterMedian(values, '0.02'))
-      filtered.every((f, i) => {
+      filtered.forEach((f, i) => {
         expect(f).to.be.eqls(expected[i])
       })
     })
