@@ -25,6 +25,10 @@ const nBN = (value) => {
 
 /**
  * @param {string|number|BigNumber} value
+ * @param {object} [opts]
+ * @param {boolean} [opts.allowNegative=true]
+ * @param {boolean} [opts.allowZero=true]
+ * @param {boolean} [opts.allowDecimals=true]
  */
 const validateBN = (value, opts = { allowNegative: true, allowZero: true, allowDecimals: true }) => {
   const n = nBN(value)
