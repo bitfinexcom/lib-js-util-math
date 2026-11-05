@@ -1,6 +1,6 @@
 {
   "name": "@bitfinex/lib-js-util-math",
-  "version": "0.7.1",
+  "version": "1.0.0",
   "description": "Bitfinex JS Math Lib",
   "author": {
     "name": "prdn",
@@ -16,40 +16,20 @@
     "type": "git",
     "url": "git+https://github.com/bitfinexcom/lib-js-util-math.git"
   },
-  "engine": {
-    "node": ">=8.0"
+  "engines": {
+    "node": ">=22.0"
   },
   "main": "index.js",
   "scripts": {
-    "format": "./node_modules/.bin/standard --fix",
-    "test": "npm run lint && npm run unit",
-    "unit": "NODE_ENV=test ./node_modules/.bin/mocha ./test/index.test.js",
-    "lint": "./node_modules/.bin/standard"
+    "test": "npm run lint && brittle-node ./test/*.js",
+    "lint": "bfx-lint-js",
+    "lint:fix": "bfx-lint-js --fix"
   },
   "dependencies": {
-    "bignumber.js": "^9.0.0"
+    "bignumber.js": "^9.3.1"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "dirty-chai": "^2.0.1",
-    "husky": "^4.3.6",
-    "mocha": "^8.2.1",
-    "standard": "^16.0.3"
-  },
-  "standard": {
-    "globals": [
-      "it",
-      "describe",
-      "before",
-      "after",
-      "beforeEach",
-      "afterEach"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run test"
-    }
+    "@bitfinex/lint-js": "^1.1.0",
+    "brittle": "^4.5.0"
   }
 }
